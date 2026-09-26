@@ -1,0 +1,515 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg: #ffffff;
+  --fg: #0a0a0a;
+  --muted: #f4f4f4;
+  --muted-fg: #454545;
+  --line: #d4d4d4;
+  --hatch: #e2e2e2;
+  --cell: #efefef;
+  --accent: hsl(142 76% 34%);
+  --down: hsl(0 72% 48%);
+  --chart: #159945;
+  --bull-horn: #bfb49a;
+  --bull-horn-far: #a39880;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #000000;
+  --fg: #ffffff;
+  --muted: #121212;
+  --muted-fg: #a8a8a8;
+  --line: #2e2e2e;
+  --hatch: #262626;
+  --cell: #151515;
+  --accent: hsl(142 76% 46%);
+  --down: hsl(0 72% 56%);
+  /* A step deeper than --accent so chart marks stay inside the dark-mode lightness band. */
+  --chart: #1aae51;
+  --bull-horn: #efe9da;
+  --bull-horn-far: #b9b4a6;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-muted-fg: var(--muted-fg);
+  --color-line: var(--line);
+  --color-cell: var(--cell);
+  --color-accent: var(--accent);
+  --color-down: var(--down);
+  --color-chart: var(--chart);
+  /* Sequential ramp for the submission heatmap: one hue, from empty cell to full chart green. */
+  --color-heat-1: color-mix(in oklab, var(--chart) 30%, var(--cell));
+  --color-heat-2: color-mix(in oklab, var(--chart) 52%, var(--cell));
+  --color-heat-3: color-mix(in oklab, var(--chart) 76%, var(--cell));
+  --color-heat-4: var(--chart);
+  --font-sans: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+/* Hatched band between sections, with full-bleed dashed rules and corner marks. */
+.band {
+  position: relative;
+  height: 14px;
+  background-image: repeating-linear-gradient(-45deg, var(--hatch) 0 1px, transparent 1px 7px);
+}
+.band::before,
+.band::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  border-top: 1px dashed var(--line);
+}
+.band::before {
+  top: 0;
+}
+.band::after {
+  bottom: 0;
+}
+.band > i {
+  position: absolute;
+  z-index: 1;
+  width: 5px;
+  height: 5px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+}
+.band > i:nth-child(1) { left: -3px; top: -2px; }
+.band > i:nth-child(2) { right: -3px; top: -2px; }
+.band > i:nth-child(3) { left: -3px; bottom: -2px; }
+.band > i:nth-child(4) { right: -3px; bottom: -2px; }
+
+/* Full-bleed dashed rule under a row. */
+.rule-b {
+  position: relative;
+}
+.rule-b::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  border-top: 1px dashed var(--line);
+}
+
+/* Raised button with a thicker bottom edge. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid var(--line);
+  border-bottom-width: 3px;
+  border-radius: 0.5rem;
+  transition: background-color 150ms, transform 150ms, border-color 150ms;
+}
+.btn:hover {
+  background: var(--muted);
+  border-color: color-mix(in oklab, var(--fg) 30%, var(--line));
+  transform: translateY(-1px);
+}
+.btn:active {
+  transform: translateY(1px);
+  border-bottom-width: 2px;
+}
+
+/* ---------- Motion ---------- */
+
+:root {
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  interpolate-size: allow-keywords;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(4px);
+  }
+}
+@keyframes rise-sm {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+}
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes live {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* Page-load entrance for the top of the page; --d staggers each block. */
+.rise {
+  animation: rise 0.8s var(--ease-out) backwards;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Scroll reveal. Content is only hidden once JS has marked the page, so it never stays invisible. */
+.js .reveal:not([data-in]),
+.js .reveal:not([data-in]) .stagger > *,
+.js .reveal:not([data-in]) .heat-cell {
+  opacity: 0;
+}
+.reveal[data-in] {
+  animation: rise 0.8s var(--ease-out) backwards;
+}
+.reveal[data-in] .stagger > * {
+  animation: rise-sm 0.6s var(--ease-out) backwards;
+  animation-delay: calc(var(--i, 12) * 60ms + 150ms);
+}
+.stagger > :nth-child(1) { --i: 0; }
+.stagger > :nth-child(2) { --i: 1; }
+.stagger > :nth-child(3) { --i: 2; }
+.stagger > :nth-child(4) { --i: 3; }
+.stagger > :nth-child(5) { --i: 4; }
+.stagger > :nth-child(6) { --i: 5; }
+.stagger > :nth-child(7) { --i: 6; }
+.stagger > :nth-child(8) { --i: 7; }
+.stagger > :nth-child(9) { --i: 8; }
+.stagger > :nth-child(10) { --i: 9; }
+.stagger > :nth-child(11) { --i: 10; }
+
+/* Heatmap cells ripple in column by column (--c is the week index). */
+.reveal[data-in] .heat-cell {
+  animation: pop 0.4s var(--ease-out) backwards;
+  animation-delay: calc(var(--c, 0) * 12ms + 250ms);
+}
+
+/* Rating chart: the line draws itself, then points and labels follow. */
+.js .reveal:not([data-in]) .draw-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.reveal[data-in] .draw-line {
+  stroke-dasharray: 1;
+  animation: draw 1.6s cubic-bezier(0.6, 0, 0.2, 1) backwards 0.2s;
+}
+.pop {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.js .reveal:not([data-in]) .pop,
+.js .reveal:not([data-in]) .chart-fade {
+  opacity: 0;
+}
+.reveal[data-in] .pop {
+  animation: pop 0.4s var(--ease-out) backwards;
+  animation-delay: calc(var(--i, 0) * 80ms + 400ms);
+}
+.reveal[data-in] .chart-fade {
+  animation: fade 0.6s ease backwards 1.5s;
+}
+
+/* Banner candles slide in left to right on load; new live candles fade in. */
+.candle {
+  animation: rise-sm 0.5s var(--ease-out) backwards;
+  animation-delay: calc(var(--c, 0) * 14ms + 200ms);
+}
+.live-candle {
+  animation: live 1.8s ease-in-out infinite;
+}
+
+/* Ticker tape. */
+.ticker-track {
+  animation: marquee 45s linear infinite;
+}
+.ticker:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+.avatar-ring {
+  animation: spin 40s linear infinite;
+}
+.caret {
+  animation: blink 1s steps(1) infinite;
+}
+
+/* Accent bar that grows down the left edge of a hovered row. */
+.row-hover {
+  position: relative;
+}
+.row-hover::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 300ms var(--ease-out);
+}
+.row-hover:hover::before {
+  transform: scaleY(1);
+}
+
+/* Smooth open/close for <details> where the browser supports it. */
+@supports selector(::details-content) {
+  details::details-content {
+    block-size: 0;
+    overflow-y: clip;
+    transition: block-size 350ms var(--ease-out), content-visibility 350ms allow-discrete;
+  }
+  details[open]::details-content {
+    block-size: auto;
+  }
+}
+
+/* Theme switch: a circle grows from the toggle (driven from ThemeToggle.js). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Reading progress along the top edge, driven by scroll position. */
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+    height: 2px;
+    background: var(--accent);
+    transform-origin: left;
+    animation: grow linear both;
+    animation-timeline: scroll(root);
+  }
+  @keyframes grow {
+    from {
+      transform: scaleX(0);
+    }
+  }
+}
+
+/* ---------- Footer bull ---------- */
+
+:root {
+  --bull-light: color-mix(in oklab, var(--chart) 70%, white);
+  --bull-shade: color-mix(in oklab, var(--chart) 68%, black);
+  --bull-nose: color-mix(in oklab, var(--chart) 40%, black);
+}
+
+/* Full-bleed strip with a dashed ground line; 100cqw is the strip's width. */
+.bull-track {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  height: 124px;
+  translate: -50% 0;
+  overflow: hidden;
+  container-type: inline-size;
+}
+.bull-track::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 14px 0;
+  border-top: 1px dashed var(--line);
+}
+.bull-run {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  z-index: 1;
+  animation: bull-run 12s linear infinite;
+}
+@keyframes bull-run {
+  from {
+    transform: translateX(-110px);
+  }
+  88%,
+  to {
+    transform: translateX(calc(100cqw + 50px));
+  }
+}
+.bull-sprite {
+  cursor: pointer;
+}
+
+/* Two leg frames swap every half cycle while the body bobs a pixel. */
+.bull-bob {
+  animation: bull-bob 0.36s steps(1) infinite;
+}
+@keyframes bull-bob {
+  0% {
+    transform: translateY(-1px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+}
+.bull-frame-a,
+.bull-frame-b {
+  animation: bull-frame 0.36s steps(1) infinite;
+}
+.bull-frame-b {
+  animation-delay: -0.18s;
+}
+@keyframes bull-frame {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.bull-dust {
+  position: absolute;
+  bottom: 0;
+  left: 8px;
+  width: 4px;
+  height: 4px;
+  background: var(--muted-fg);
+  opacity: 0;
+  animation: bull-dust 0.72s linear infinite;
+  animation-delay: calc(var(--k) * -0.24s);
+}
+@keyframes bull-dust {
+  from {
+    opacity: 0.6;
+    transform: translate(0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-24px, -9px) scale(0.4);
+  }
+}
+
+/* Hovering the bull stops it in its tracks. */
+.bull-run:hover,
+.bull-run:hover :is(.bull-bob, .bull-frame-a, .bull-frame-b) {
+  animation-play-state: paused;
+}
+.bull-run:hover .bull-dust {
+  visibility: hidden;
+}
+
+.bull-jump {
+  animation: bull-jump 0.6s both;
+}
+@keyframes bull-jump {
+  0% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0.2, 0.8, 0.4, 1);
+  }
+  45% {
+    transform: translateY(-24px);
+    animation-timing-function: cubic-bezier(0.6, 0, 0.8, 0.4);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+.bull-call {
+  position: absolute;
+  bottom: 84px;
+  left: 44px;
+  font: 600 11px/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  white-space: nowrap;
+  pointer-events: none;
+  animation: bull-call 1.3s ease-out forwards;
+}
+@keyframes bull-call {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  20% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  .scroll-progress,
+  .caret,
+  .bull-dust,
+  .bull-call {
+    display: none;
+  }
+  /* The bull stands still instead of running. */
+  .bull-run,
+  .bull-bob,
+  .bull-frame-a,
+  .bull-frame-b {
+    animation: none !important;
+  }
+  .bull-run {
+    transform: translateX(24px);
+  }
+  .bull-frame-a {
+    opacity: 0;
+  }
+}
