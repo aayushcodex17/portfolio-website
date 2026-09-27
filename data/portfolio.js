@@ -70,58 +70,82 @@ export const ticker = [
   { symbol: "SEBI RA", value: "REGISTERED" },
 ];
 
-// about: a line on what the company does. points/stack are optional; add them as you ship things.
-// logo: file in /public/logos; fill: true for logos that are already a full tile.
-// brand: the company's colour, used to tint the logo tile and its glow.
-// Without a logo, the initials are shown instead.
-export const experience = [
-  {
-    role: "Backend Engineer",
-    company: "Scholiphi",
-    initials: "SC",
-    logo: "/logos/scholiphi.svg",
-    fill: true,
-    brand: "#4D51BF",
-    url: "https://www.scholiphi.com",
-    period: "Aug 2026 – Present",
-    location: "Remote",
-    about: "AI-powered school management platform that brings ERP, LMS and student management together for teachers, students and parents.",
-    points: [],
-    stack: [],
-  },
-  {
-    role: "Backend Developer",
-    company: "Chaitanya Projects Consultancy (CPCL)",
-    initials: "CP",
-    logo: "/logos/cpcl.png",
-    brand: "#08A888",
-    url: "https://www.chaitanyaprojects.com/",
-    period: "Nov 2025 – Jun 2026",
-    location: "Remote",
-    points: [
-      "Rebuilt Homeplanr's backend with RESTful Spring Boot microservices and MongoDB, supporting thousands of active listings on a fully decoupled, scalable architecture.",
-      "Boosted platform performance with server-side caching and MongoDB index optimisation on high-traffic endpoints, cutting page load time by 80%.",
-      "Grew organic traffic by restructuring API payloads for SEO-friendly server rendering and metadata injection, with a measurable uplift in search rankings.",
-    ],
-    stack: ["Java", "Spring Boot", "MongoDB", "REST APIs", "Caching"],
-  },
-  {
-    role: "Backend Engineer & Prop Trader",
-    company: "Jainam Broking (Trade Delta)",
-    initials: "JB",
-    logo: "/logos/jainam.png",
-    brand: "#08B878",
-    url: "https://www.jainam.in",
-    period: "Jan 2025 – Oct 2025",
-    location: "Bengaluru, KA",
-    points: [
-      "Engineered low-latency trading algorithms in C++ with lock-free data structures and custom memory allocators, achieving sub-millisecond latency on critical execution paths.",
-      "Redesigned the backend from a monolith into Spring Boot microservices with Kafka-based async event pipelines, improving system throughput by 70%.",
-      "Led the cloud migration to AWS EC2 auto-scaling groups with load balancing, eliminating infrastructure bottlenecks during peak trading hours.",
-    ],
-    stack: ["C++", "Java", "Spring Boot", "Kafka", "AWS EC2"],
-  },
-];
+// Career timeline, drawn as a git log (oldest first).
+// type + message make the commit line. branch: this commit forks a side branch (named here);
+// onBranch: the entry sits on that side branch; head: where you are now (shown as "YOU ARE HERE").
+// logo: file in /public/logos; fill: true for logos that are already a full tile; wide: true for wordmark-shaped
+// logos (less padding); brand tints the logo tile.
+export const career = {
+  eyebrow: "Career log",
+  title: "Not a résumé.",
+  subtitle: "A commit log.",
+  summary:
+    "Every role shipped something: a faster system, a cleaner architecture or a sharper instinct for risk. HEAD is where I am now.",
+  card: { value: 1871, label: "peak contest rating on LeetCode", href: "https://leetcode.com/u/aayushcodex/" },
+  commits: [
+    {
+      type: "init",
+      message: "hello, world",
+      name: "DSCE",
+      badge: "B.E. · ECE",
+      meta: "Dayananda Sagar College of Engineering · 2022 – 2026",
+      logo: "/logos/dsce.png",
+      brand: "#1C5FB8",
+      url: "https://www.dsce.edu.in",
+      text: "Electronics & Communication Engineering, graduating with a CGPA of 7.0 / 10, while building a habit of C++, data structures and backend side projects.",
+    },
+    {
+      type: "feat",
+      message: "low-latency trading systems",
+      name: "Jainam Broking",
+      badge: "Backend Engineer & Prop Trader",
+      meta: "Trade Delta · Jan 2025 – Oct 2025 · Bengaluru",
+      logo: "/logos/jainam.png",
+      brand: "#08B878",
+      url: "https://www.jainam.in",
+      text: "Wrote C++ trading algorithms with lock-free data structures and custom allocators for sub-millisecond execution, split the monolith into Kafka-driven Spring Boot services for 70% more throughput, and moved it all onto AWS auto-scaling.",
+      chips: ["C++", "Spring Boot", "Kafka", "AWS EC2"],
+      branch: "markets/research",
+    },
+    {
+      type: "perf",
+      message: "80% faster page loads",
+      name: "CPCL",
+      badge: "Backend Developer",
+      meta: "Chaitanya Projects Consultancy · Nov 2025 – Jun 2026 · Remote",
+      logo: "/logos/cpcl.png",
+      brand: "#08A888",
+      url: "https://www.chaitanyaprojects.com/",
+      text: "Rebuilt Homeplanr's backend as RESTful Spring Boot microservices on MongoDB for thousands of active listings, cut page load times by 80% with server-side caching and index tuning, and reshaped API payloads for SEO-friendly server rendering.",
+      chips: ["Java", "Spring Boot", "MongoDB", "Caching"],
+    },
+    {
+      type: "branch",
+      message: "markets/research",
+      onBranch: true,
+      name: "SEBI Research Analyst",
+      meta: "NISM certified",
+      logo: "/logos/nism.png",
+      wide: true,
+      brand: "#2E3192",
+      text: "Licensed to publish equity and derivatives research, and trading futures and options with live capital. It's why I design for latency, correctness and risk the way a trading desk would.",
+      chips: ["Equity research", "Derivatives", "Risk"],
+    },
+    {
+      type: "merge",
+      message: "everything so far → HEAD",
+      name: "Scholiphi",
+      badge: "Backend Engineer",
+      head: true,
+      meta: "Aug 2026 – Present · Remote",
+      logo: "/logos/scholiphi.svg",
+      fill: true,
+      brand: "#4D51BF",
+      url: "https://www.scholiphi.com",
+      text: "Building backend systems for an AI-powered school management platform that brings ERP, LMS and student management together for teachers, students and parents.",
+    },
+  ],
+};
 
 // status shows as a small pill next to the name.
 export const projects = [
@@ -264,10 +288,3 @@ export const achievements = [
     kind: "trader",
   },
 ];
-
-export const education = {
-  degree: "B.E. Electronics & Communication Engineering",
-  school: "Dayananda Sagar College of Engineering, Bengaluru",
-  period: "2022 – 2026",
-  score: "CGPA 7.0 / 10",
-};

@@ -1,7 +1,7 @@
 import { FaGithub } from "react-icons/fa6";
 import { LuExternalLink } from "react-icons/lu";
 import { projects } from "@/data/portfolio";
-import { Tags } from "./Experience";
+import { Tags } from "./Tags";
 import Section from "./Section";
 
 export default function Projects() {

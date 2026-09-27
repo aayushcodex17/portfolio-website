@@ -1,8 +1,8 @@
 import Achievements from "@/components/Achievements";
 import Band from "@/components/Band";
+import Career from "@/components/Career";
 import Banner from "@/components/Banner";
 import Contact from "@/components/Contact";
-import Experience from "@/components/Experience";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Intro from "@/components/Intro";
@@ -27,7 +27,7 @@ export default function Home() {
       <Band />
       <main>
         <Intro />
-        <Experience />
+        <Career />
         <Projects />
         <Skills />
         <Achievements />

@@ -1,6 +1,6 @@
-import { LuChartCandlestick, LuGraduationCap, LuLandmark } from "react-icons/lu";
+import { LuChartCandlestick, LuLandmark } from "react-icons/lu";
 import { SiLeetcode } from "react-icons/si";
-import { achievements, education } from "@/data/portfolio";
+import { achievements } from "@/data/portfolio";
 import Section from "./Section";
 
 const ICONS = { leetcode: SiLeetcode, sebi: LuLandmark, trader: LuChartCandlestick };
@@ -22,37 +22,14 @@ function Row({ icon: Icon, title, children, aside }) {
 
 export default function Achievements() {
   return (
-    <>
-      <Section id="achievements" title="achievements.">
-        <ul className="stagger divide-y divide-dashed divide-line">
-          {achievements.map((a) => (
-            <Row key={a.title} icon={ICONS[a.kind]} title={a.title}>
-              {a.detail}
-            </Row>
-          ))}
-        </ul>
-      </Section>
-      <Section id="education" title="education.">
-        <ul>
-          <Row
-            icon={LuGraduationCap}
-            title={education.degree}
-            aside={
-              <p className="hidden text-right text-sm leading-6 text-muted-fg sm:block">
-                {education.period}
-                <br />
-                {education.score}
-              </p>
-            }
-          >
-            {education.school}
-            <span className="sm:hidden">
-              {" "}
-              · {education.period} · {education.score}
-            </span>
+    <Section id="achievements" title="achievements.">
+      <ul className="stagger divide-y divide-dashed divide-line">
+        {achievements.map((a) => (
+          <Row key={a.title} icon={ICONS[a.kind]} title={a.title}>
+            {a.detail}
           </Row>
-        </ul>
-      </Section>
-    </>
+        ))}
+      </ul>
+    </Section>
   );
 }

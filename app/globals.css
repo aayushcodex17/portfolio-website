@@ -10,6 +10,7 @@
   --line: #d4d4d4;
   --hatch: #e2e2e2;
   --cell: #efefef;
+  --card: #fafafa;
   --accent: hsl(142 76% 34%);
   --down: hsl(0 72% 48%);
   --chart: #159945;
@@ -26,6 +27,7 @@
   --line: #2e2e2e;
   --hatch: #262626;
   --cell: #151515;
+  --card: #0b0b0b;
   --accent: hsl(142 76% 46%);
   --down: hsl(0 72% 56%);
   /* A step deeper than --accent so chart marks stay inside the dark-mode lightness band. */
@@ -42,6 +44,7 @@
   --color-muted-fg: var(--muted-fg);
   --color-line: var(--line);
   --color-cell: var(--cell);
+  --color-card: var(--card);
   --color-accent: var(--accent);
   --color-down: var(--down);
   --color-chart: var(--chart);
