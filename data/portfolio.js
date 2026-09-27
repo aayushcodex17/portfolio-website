@@ -30,7 +30,7 @@ export const profile = {
   initials: "AC",
   role: "Backend Engineer",
   // The role line under your name types through these in turn.
-  roles: ["Backend Engineer", "Java · Spring Boot · Kafka", "Low-latency C++", "SEBI Research Analyst"],
+  roles: ["Backend Engineer", "Java · Spring Boot · Kafka", "SEBI Research Analyst", "Futures & Options Trader", "Next.js · React · TypeScript"],
   location: "Bengaluru, IN",
   timeZone: "Asia/Kolkata",
   timeZoneLabel: "IST",
