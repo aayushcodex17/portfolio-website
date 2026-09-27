@@ -282,6 +282,52 @@ body {
   animation: blink 1s steps(1) infinite;
 }
 
+/* Company logo tile: tinted with the company's colour, with a soft glow in it.
+   The open (or hovered) job lifts, and a sheen sweeps across when the section appears. */
+.logo-tile {
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 0.875rem;
+  background: color-mix(in oklab, var(--brand) 7%, white);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--brand) 30%, var(--line)),
+    0 8px 20px -10px color-mix(in oklab, var(--brand) 80%, transparent);
+  transition:
+    transform 300ms var(--ease-out),
+    box-shadow 300ms var(--ease-out);
+}
+.logo-tile[data-fill] {
+  background: var(--brand);
+}
+.group:hover .logo-tile,
+.group[open] .logo-tile {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--brand) 65%, transparent),
+    0 12px 28px -8px color-mix(in oklab, var(--brand) 90%, transparent);
+}
+.logo-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgb(255 255 255 / 0.6) 50%, transparent 70%);
+  transform: translateX(-130%);
+  pointer-events: none;
+}
+.group:hover .logo-shine {
+  transform: translateX(130%);
+  transition: transform 900ms var(--ease-out);
+}
+@keyframes logo-shine {
+  to {
+    transform: translateX(130%);
+  }
+}
+.reveal[data-in] .logo-shine {
+  animation: logo-shine 1.1s var(--ease-out) backwards;
+  animation-delay: calc(var(--i, 0) * 180ms + 600ms);
+}
+
 /* Accent bar that grows down the left edge of a hovered row. */
 .row-hover {
   position: relative;

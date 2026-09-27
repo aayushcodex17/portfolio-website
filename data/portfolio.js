@@ -71,7 +71,8 @@ export const ticker = [
 ];
 
 // about: a line on what the company does. points/stack are optional; add them as you ship things.
-// logo: file in /public/logos (shown on a white tile); fill: true for logos that are already a full tile.
+// logo: file in /public/logos; fill: true for logos that are already a full tile.
+// brand: the company's colour, used to tint the logo tile and its glow.
 // Without a logo, the initials are shown instead.
 export const experience = [
   {
@@ -80,6 +81,7 @@ export const experience = [
     initials: "SC",
     logo: "/logos/scholiphi.svg",
     fill: true,
+    brand: "#4D51BF",
     url: "https://www.scholiphi.com",
     period: "Aug 2026 – Present",
     location: "Remote",
@@ -92,6 +94,7 @@ export const experience = [
     company: "Chaitanya Projects Consultancy (CPCL)",
     initials: "CP",
     logo: "/logos/cpcl.png",
+    brand: "#08A888",
     url: "https://www.chaitanyaprojects.com/",
     period: "Nov 2025 – Jun 2026",
     location: "Remote",
@@ -107,6 +110,7 @@ export const experience = [
     company: "Jainam Broking (Trade Delta)",
     initials: "JB",
     logo: "/logos/jainam.png",
+    brand: "#08B878",
     url: "https://www.jainam.in",
     period: "Jan 2025 – Oct 2025",
     location: "Bengaluru, KA",
