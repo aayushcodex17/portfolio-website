@@ -71,11 +71,15 @@ export const ticker = [
 ];
 
 // about: a line on what the company does. points/stack are optional; add them as you ship things.
+// logo: file in /public/logos (shown on a white tile); fill: true for logos that are already a full tile.
+// Without a logo, the initials are shown instead.
 export const experience = [
   {
     role: "Backend Engineer",
     company: "Scholiphi",
     initials: "SC",
+    logo: "/logos/scholiphi.svg",
+    fill: true,
     url: "https://www.scholiphi.com",
     period: "Aug 2026 – Present",
     location: "Remote",
@@ -87,6 +91,7 @@ export const experience = [
     role: "Backend Developer",
     company: "Chaitanya Projects Consultancy (CPCL)",
     initials: "CP",
+    logo: "/logos/cpcl.png",
     url: "https://www.chaitanyaprojects.com/",
     period: "Nov 2025 – Jun 2026",
     location: "Remote",
@@ -101,6 +106,7 @@ export const experience = [
     role: "Backend Engineer & Prop Trader",
     company: "Jainam Broking (Trade Delta)",
     initials: "JB",
+    logo: "/logos/jainam.png",
     url: "https://www.jainam.in",
     period: "Jan 2025 – Oct 2025",
     location: "Bengaluru, KA",

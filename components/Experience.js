@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { LuChevronDown } from "react-icons/lu";
 import { experience } from "@/data/portfolio";
 import Section from "./Section";
@@ -21,9 +22,22 @@ export default function Experience() {
         {experience.map((job, i) => (
           <details key={job.company} open={i === 0} className="group">
             <summary className="row-hover flex cursor-pointer list-none items-center gap-3 px-4 py-4 transition-colors hover:bg-muted/60 [&::-webkit-details-marker]:hidden">
-              <span className="grid size-12 shrink-0 place-items-center rounded-lg border border-line bg-muted font-mono text-sm font-semibold transition-colors duration-300 group-open:border-accent/60 group-open:text-accent">
-                {job.initials}
-              </span>
+              {job.logo ? (
+                <span className="relative size-12 shrink-0 overflow-hidden rounded-lg border border-line bg-white transition-colors duration-300 group-open:border-accent/60">
+                  <Image
+                    src={job.logo}
+                    alt=""
+                    fill
+                    sizes="48px"
+                    unoptimized={job.logo.endsWith(".svg")}
+                    className={job.fill ? "object-cover" : "object-contain p-1.5"}
+                  />
+                </span>
+              ) : (
+                <span className="grid size-12 shrink-0 place-items-center rounded-lg border border-line bg-muted font-mono text-sm font-semibold transition-colors duration-300 group-open:border-accent/60 group-open:text-accent">
+                  {job.initials}
+                </span>
+              )}
               <span className="min-w-0 flex-1">
                 <span className="block font-medium">{job.role}</span>
                 <span className="block truncate text-sm text-muted-fg">@ {job.company}</span>
