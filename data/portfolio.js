@@ -73,11 +73,10 @@ export const ticker = [
 // Career timeline, drawn as a git log (oldest first).
 // type + message make the commit line. branch: this commit forks a side branch (named here);
 // onBranch: the entry sits on that side branch; head: where you are now (shown as "YOU ARE HERE").
-// logo: file in /public/logos; fill: true for logos that are already a full tile; wide: true for wordmark-shaped
-// logos (less padding); brand tints the logo tile.
+// logo: file in /public/logos; fill: true for logos that are already a full tile; brand tints the logo tile.
 export const career = {
   eyebrow: "Career log",
-  title: "Not a résumé.",
+  title: "Not a resume.",
   subtitle: "A commit log.",
   summary:
     "Every role shipped something: a faster system, a cleaner architecture or a sharper instinct for risk. HEAD is where I am now.",
@@ -125,11 +124,8 @@ export const career = {
       onBranch: true,
       name: "SEBI Research Analyst",
       meta: "NISM certified",
-      logo: "/logos/nism.png",
-      wide: true,
-      brand: "#2E3192",
       text: "Licensed to publish equity and derivatives research, and trading futures and options with live capital. It's why I design for latency, correctness and risk the way a trading desk would.",
-      chips: ["Equity research", "Derivatives", "Risk"],
+      chips: ["Equity research", "Derivatives", "Risk analysis", "Futures & options"],
     },
     {
       type: "merge",
